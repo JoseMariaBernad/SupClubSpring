@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.supclub.entity.Reservation;
+import com.supclub.model.ValidationResult;
 import com.supclub.service.ReservationService;
 
 @Controller
@@ -36,7 +38,7 @@ public class ReservationController {
 	}
 	
 	@RequestMapping(value = "/newReservation")
-	public String crear(Map<String, Object> model) {
+	public String newReservation(Map<String, Object> model) {
 		Reservation reservation = new Reservation();
 		model.put("reservation", reservation);
 		model.put("title", "Nueva reserva");
@@ -62,5 +64,22 @@ public class ReservationController {
 
 		status.setComplete();
 		return "redirect:reservations";
+	}
+	
+	@RequestMapping(value = "/reservation/{id}")
+	public String showReservation(@PathVariable(value="id") Long id, Map<String, Object> model) {
+		Reservation reservation = reservationService.findReservationById(id);
+		model.put("reservation", reservation);
+		model.put("title", "Mostrar reserva");
+		return "reservation";
+	}
+	
+	@RequestMapping(value = "/cancelReservation/{id}")
+	public String cancelReservation(@PathVariable(value="id") Long id, Map<String, Object> model) {
+		//TODO: Validate the reservation before canceling (FR5)
+		Reservation reservation = reservationService.findReservationById(id);
+		ValidationResult result = reservationService.cancelReservation(reservation);
+		//TODO: check result prior to showing reservations 
+		return "redirect:/reservations";
 	}
 }

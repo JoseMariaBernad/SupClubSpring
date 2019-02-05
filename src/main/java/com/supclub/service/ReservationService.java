@@ -53,4 +53,15 @@ public class ReservationService {
 		
 		return boardRepository.findAll();
 	}
+
+	public Reservation findReservationById(Long id) {
+		
+		return reservationRepository.findById(id).orElse(null);
+	}
+
+	public ValidationResult cancelReservation(Reservation reservation) {
+		// TODO Validate reservation prior to canceling
+		reservationRepository.delete(reservation);
+		return null;
+	}
 }
