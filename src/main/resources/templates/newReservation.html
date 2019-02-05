@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title th:text="${title}">Insert title here</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
+</head>
+<body>
+
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+		<a class="navbar-brand" href="#">Sup Club</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link" href="#"
+					th:href="@{/reservations}">Reservas</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">Crear
+						Reserva</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container">
+		<h1
+			class="text-secondary border border-success border-top-0 border-left-0 border-right-0"
+			th:text="${title}"></h1>
+
+		<form th:action="@{/newReservation}" th:object="${reservation}"
+			method="post">
+			<div class="form-group row">
+				<label for="startDate" class="col-sm-2 col-form-label">Fecha
+					Inicio</label>
+				<div class="col-sm-6">
+					<input type="date" class="form-control" th:field="*{startDate}"
+						th:errorclass="'form-control alert-danger'" /> <small
+						class="form-text text-danger"
+						th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></small>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="endDate" class="col-sm-2 col-form-label">Fecha
+					Fin</label>
+				<div class="col-sm-6">
+					<input type="date" class="form-control" th:field="*{endDate}"
+						th:errorclass="'form-control alert-danger'" /> <small
+						class="form-text text-danger"
+						th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></small>
+				</div>
+			</div>
+			<div class="form-group row" th:if="${availableBoards == null}">
+				<div class="col-sm-6">
+					<input type="submit" value="Mostrar tablas disponibles" class="btn btn-primary" />
+				</div>
+			</div>			
+			<div class="form-group row" th:if="${availableBoards != null}">
+				<label for="board" class="col-sm-2 col-form-label">Seleccione
+					Tabla</label>
+				<div class="col-sm-6">
+					<select class="form-control" th:field="*{board.id}">
+						<option value="0">Seleccione Tabla</option>
+						<option th:each="availableBoard : ${availableBoards}"
+                            th:value="${availableBoard.id}"
+                            th:utext="${availableBoard.model}"/>
+					</select> <small class="form-text text-danger"
+						th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></small>
+				</div>
+			</div>
+			<div class="form-group row" th:if="${availableBoards != null}">
+				<div class="col-sm-6">
+					<input type="submit" value="Reservar tabla" class="btn btn-primary" />
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

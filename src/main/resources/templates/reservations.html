@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title th:text="${titulo}">Insert title here</title>
+<title th:text="${title}">Insert title here</title>
 <link rel="stylesheet" 
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" 
 	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" 
@@ -21,8 +21,7 @@
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active"><a class="nav-link" href="#"
 					th:href="@{/reservations}">Reservas</a></li>
-				<li class="nav-item"><a class="nav-link" href="#"
-					>Crear Reserva</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">Crear Reserva</a></li>
 			</ul>
 		</div>
 	</nav>
@@ -30,7 +29,7 @@
 	<div class="container">
 		<h1
 			class="text-secondary border border-success border-top-0 border-left-0 border-right-0"
-			th:text="${titulo}"></h1>
+			th:text="${title}"></h1>
         <p><a th:href="@{/newReservation}" class="btn btn-success btn-xs">Nueva reserva</a></p>
 		<table class="table table-sm table-striped table-responsive">
 			<tbody>

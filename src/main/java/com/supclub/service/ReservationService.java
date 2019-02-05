@@ -1,13 +1,14 @@
 package com.supclub.service;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.supclub.entity.Board;
 import com.supclub.entity.Reservation;
 import com.supclub.model.ValidationResult;
+import com.supclub.repository.BoardRepository;
 import com.supclub.repository.ReservationRepository;
 
 @Service
@@ -15,6 +16,9 @@ public class ReservationService {
 
 	@Autowired
 	private ReservationRepository reservationRepository;
+	
+	@Autowired
+	private BoardRepository boardRepository;
 	
 	private Date currentTime;
 	
@@ -42,5 +46,11 @@ public class ReservationService {
 	public Iterable<Reservation> findAll() {
 		//TODO: find only reservations for current user or all if user is administrator 
 		return reservationRepository.findAll();
+	}
+
+	public Iterable<Board> findAvailableBoards(Date startDate, Date endDate) {
+		// TODO Actually find available boards, not all boards.
+		
+		return boardRepository.findAll();
 	}
 }

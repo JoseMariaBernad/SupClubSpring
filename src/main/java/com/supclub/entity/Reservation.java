@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.supclub.model.ValidationResult;
 
 @Entity
@@ -33,9 +35,11 @@ public class Reservation implements Serializable{
     private Board board;
     
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date startDate;
     
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date endDate;
     
     @Enumerated(EnumType.STRING)
@@ -72,7 +76,12 @@ public class Reservation implements Serializable{
 		this.status = status;
 	}
 	public ValidationResult confirm(Iterable<Reservation> reservations, Date currentTime) {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO Validate reservation.
+		ValidationResult result = new ValidationResult();
+		result.setValid(true);
+		
+		this.status = ReservationStatus.Confirmed;
+		
+		return result;
 	}
 }
